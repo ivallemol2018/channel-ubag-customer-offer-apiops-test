@@ -1,0 +1,260 @@
+openapi: 3.0.1
+info:
+  title: API UX UBAG Customer Offer Apiops Test V1
+  description: "[INGRESAR_AQUI_DESCRIPCION_API]"
+  version: 1.0.0
+servers:
+- url: /channel-ubag-customer-offer-apiops-test/v1
+externalDocs:
+  url: ../doc/Readme.md
+  description: Mas informacion
+tags:
+  - name: Factoring Order
+    description: Funcionalidades relacionadas con [INGRESAR_AQUI_DESCRIPCION_ESPANOL_RECURSO].
+paths:
+  /factoring-orders:
+    get:
+      tags:
+      - Factoring Order
+      summary: ''
+      description: |
+        [INGRESAR_AQUI_DESCRIPCION_FUNCIONAL_DETALLADA_ENDPOINT]
+      operationId: getFactoringOrder
+      parameters:
+      - $ref: '#/components/parameters/AuthorizationHeader'
+      responses:
+        '200':
+          $ref: '#/components/responses/200GetFactoringOrderResponse'
+        '400':
+          $ref: '#/components/responses/400BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/401UnauthorizedResponse'
+        '404':
+          $ref: '#/components/responses/404NotFoundResponse'
+        '429':
+          $ref: '#/components/responses/429TooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/500InternalServerErrorResponse'
+        '501':
+          $ref: '#/components/responses/501NotImplementedResponse'
+        '502':
+          $ref: '#/components/responses/502BadGatewayResponse'
+        '503':
+          $ref: '#/components/responses/503ServiceUnavailableResponse'
+        '504':
+          $ref: '#/components/responses/504GatewayTimeoutResponse'
+  /factoring-orders/{factoringOrderId}:
+    get:
+      tags:
+      - Factoring Order
+      summary: ''
+      description: |
+        [INGRESAR_AQUI_DESCRIPCION_FUNCIONAL_DETALLADA_ENDPOINT]
+      operationId: getFactoringOrder
+      parameters:
+      - $ref: '#/components/parameters/AuthorizationHeader'
+      - $ref: '#/components/parameters/FactoringOrderIdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/200GetFactoringOrderResponse'
+        '400':
+          $ref: '#/components/responses/400BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/401UnauthorizedResponse'
+        '404':
+          $ref: '#/components/responses/404NotFoundResponse'
+        '429':
+          $ref: '#/components/responses/429TooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/500InternalServerErrorResponse'
+        '501':
+          $ref: '#/components/responses/501NotImplementedResponse'
+        '502':
+          $ref: '#/components/responses/502BadGatewayResponse'
+        '503':
+          $ref: '#/components/responses/503ServiceUnavailableResponse'
+        '504':
+          $ref: '#/components/responses/504GatewayTimeoutResponse'
+components:
+  schemas:
+    GetFactoringOrderResponse: {}
+    ApiException:
+      type: object
+      title: ApiException
+      description: El servicio no recibio una respuesta oportuna de la aplicacion
+      example:
+        code: ER0007
+        description: Error al llamar al servicio
+        errorType: Functional
+        exceptionDetails:
+        - code: TL001
+          description: Error al llamar al servicio
+          path: Party.part
+          url: https://documentation-to-fix-error.com/como-consultar-datos-usuario-info
+      required:
+      - code
+      - description
+      properties:
+        code:
+          type: string
+          description: Codigo de error de alto, nivel, es el 2do nivel de detalle de un
+            error, se basa en el http code devuelto.El formato es ERXXXX, donde XXXX es
+            el numero de error.
+          maxLength: 6
+          example: ER0007
+        errorType:
+          type: string
+          enum:
+          - Functional
+          - Technical
+          description: "Tipo de error:\n- Functional - Error devuelto por una validacion\
+            \ o regla de \nnegocio no superada\n- Techical - Error devuelto por la herramienta\
+            \ o sistema,\ngeneralmente causado por problemas tecnicos o dependencias externas.\n"
+          example: Functional
+        description:
+          type: string
+          description: Descripcion del mensaje de error, alto nivel.
+          maxLength: 500
+          example: Error al llamar al servicio
+        exceptionDetails:
+          type: array
+          description: Contiene la lista de detalles para mayor detalle del error originado
+          items:
+            $ref: '#/components/schemas/ApiExceptionDetail'
+    ApiExceptionDetail:
+      type: object
+      title: ApiExceptionDetail
+      description: Contiene la lista de detalles para mayor detalle del error originado
+      example:
+        code: TL0001
+        description: Error al llamar al servicio
+        path: Party.partyIdentification.IdentifierValue
+        url: https://documentacion-to-fix-error.com/como-consultar-datos-usuario-info
+      required:
+      - code
+      - description
+      properties:
+        code:
+          type: string
+          description: Codigo de error de alto, nivel, es el 2do nivel de detalle de un
+            error, se basa en el http code devuelto.El formato es ERXXXX, donde XXXX es
+            el numero de error.
+          maxLength: 6
+          example: ER0007
+        description:
+          type: string
+          description: Descripcion del mensaje de error, alto nivel.
+          maxLength: 500
+          example: Error al llamar al servicio
+        path:
+          type: string
+          maxLength: 200
+          description: Referencia al path del Json involucrado en el error, aqui se indica
+            que objecto del request, response o parametro de consulta es el involucrado
+            con el error
+          example: Party.partyIdentification.IdentifierValue
+        url:
+          type: string
+          maxLength: 200
+          description: Ubicacion de la documentacion para soporte del problema.
+          example: https://documentation-to-fix-error.com/como-consultar-datos-usuario-info
+    Authorization:
+      type: string
+      description: Token de autorizacion JWT
+      minLength: 16
+      maxLength: 8192
+      pattern: ^Bearer\s.+$
+      example: Bearer eyJBggffdgdfdf
+    FactoringOrderId: {}
+  parameters:
+    AuthorizationHeader:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        $ref: '#/components/schemas/Authorization'
+    FactoringOrderIdPath:
+      name: factoringOrderId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/FactoringOrderId'
+  responses:
+    200GetFactoringOrderResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetFactoringOrderResponse'
+    500InternalServerErrorResponse:
+      description: El servicio lanzo algun error. Por favor contactarse con soporte Tecnico.
+        Por favor, comuniquese con su administrador.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    501NotImplementedResponse:
+      description: El servicio lanzo algun error. Por favor contactarse con soporte Tecnico.
+        Por favor, comuniquese con su administrador.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    502BadGatewayResponse:
+      description: El servicio recibio una respuesta invalida del backend. Por favor intente
+        nuevamente mas tarde.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    504GatewayTimeoutResponse:
+      description: El tiempo de espera para recibir una respuesta del  backend ha expirado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    400BadRequestResponse:
+      description: La solicitud enviada no es valida. Por favor revise los parametros
+        o el cuerpo de la peticion.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    401UnauthorizedResponse:
+      description: No se pudo autenticar la solicitud. Por favor verifique las credenciales
+        proporcionadas.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    404NotFoundResponse:
+      description: El recurso solicitado no fue encontrado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    429TooManyRequestsResponse:
+      description: Se supero el limite de solicitudes permitidas. Por favor intente nuevamente
+        mas tarde.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+    503ServiceUnavailableResponse:
+      description: El servicio no se encuentra disponible en este momento. Por favor intente
+        nuevamente mas tarde.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiException'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      description: Token de autorizacion
+      scheme: bearer
+
+security:
+- bearerAuth: []
+
+x-bcp-api-type: UX
+x-bcp-api-id: ubag-customer-offer-apiops-test
