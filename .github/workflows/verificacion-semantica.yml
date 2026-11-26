@@ -1,0 +1,21 @@
+name: Verificación semántica de contratos openapi y asincapi
+
+# La lógica, las reglas y el glosario viven en el repositorio central gobierno-apis.
+# Este archivo solo activa el check. No es necesario configurar nada en este repo:
+# el token llega desde el secret de organización COPILOT_CLI_TOKEN (secrets: inherit).
+#
+# Sin filtro `paths` a propósito: si el check es obligatorio y el workflow no corre,
+# el PR quedaría bloqueado en "pending". Si el PR no toca api/, el check termina en verde.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  verificacion-semantica-api:
+    uses: ivallemol2018/gobierno-apis/.github/workflows/verificacion-semantica.yml@v1
+    secrets: inherit
